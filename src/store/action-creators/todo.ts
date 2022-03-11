@@ -3,12 +3,16 @@ import {Dispatch} from "redux";
 import axios from "axios";
 
 
-const fetchTodos = (page = 1, limit = 10) => {
+export const fetchTodos = (page = 1, limit = 10) => {
     return async (dispatch: Dispatch<TodosAction>) => {
         try {
             dispatch({type: TodosActiontypes.FETCH_TODOS})
             const response = await axios.get('https://jsonplaceholder.typicode.com/todos', {
                 params: {_page: page, _limit: limit}
+            })
+            dispatch({
+                type:TodosActiontypes.FETCH_TODOS_SUCCESS,
+                payload: response.data
             })
         } catch (e) {
             dispatch({
